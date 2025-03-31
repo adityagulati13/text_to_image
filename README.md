@@ -23,6 +23,7 @@ Shannon entropy is calculated from the distribution of pixel intensities
 
 ## Demo
 https://youtu.be/w6iDbDGKt7Y
+https://texttoimg-6mf6oulb4cpsrgcyzegdwy.streamlit.app/
 
 
 ## Deployment
