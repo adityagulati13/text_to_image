@@ -10,13 +10,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          lfs: true
-
-      - name: Push to Hugging Face Space
+      - name: Clone Hugging Face Space Repo
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
+          git clone https://${{ secrets.HF_TOKEN }}@huggingface.co/spaces/gulatiadiii/text_to_image repo
+          cd repo
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
-          git push --force https://${{ secrets.HF_TOKEN }}@huggingface.co/spaces/gulatiadiii/text_to_image main
+
+      - name: Copy Updated Files from Main Repo
+        uses: actions/checkout@v3
+        with:
+          path: source
+
+      - name: Sync and Push to Hugging Face
+        run: |
+          rm -rf repo/*  # Clear existing files in HF repo
+          cp -r source/* repo/
+          cd repo
+          git add .
+          git commit -m "Sync from GitHub Actions" || echo "Nothing to commit"
+          git push origin main --force
+
