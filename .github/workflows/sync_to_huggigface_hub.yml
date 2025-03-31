@@ -1,21 +1,28 @@
 name: Sync to Hugging Face hub
+
 on:
   push:
     branches: [main]
-
-  # to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
   sync-to-hub:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           lfs: true
-      - name: Push to hub
+
+      - name: Set Git identity
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+
+      - name: Push to Hugging Face Space
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push -- force https://gulatiadiii:$HF_TOKEN@huggingface.co/spaces/gulatiadiii/text_to_image
-
+        run: |
+          git remote set-url origin https://$HF_TOKEN@huggingface.co/spaces/gulatiadiii/text_to_image
+          git push origin main --force
