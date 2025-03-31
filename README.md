@@ -1,4 +1,4 @@
-# A streamlit app using the pretrained model (“runwayml/stable-diffusion-v1-5”) and diffusers, with metrices to anamlyse the output.
+# A streamlit app using the pretrained model (“runwayml/stable-diffusion-v1-5”) and diffusers, with metrices to analyse the output.
 
 1.	Application Workflow
 	User Prompt Input- Users begin by entering a natural language text prompt that describes the desired scene . This prompt forms the foundation for the image generation process.  
