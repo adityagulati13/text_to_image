@@ -33,3 +33,13 @@ To deploy this project run
   streamlit run app.py
 ```
 python version-> 3.9-3.10
+
+title: Text To Image
+emoji: 💻
+colorFrom: red
+colorTo: gray
+sdk: streamlit
+sdk_version: 1.44.0
+app_file: app.py
+pinned: false
+short_description: uses stable diffusion model
