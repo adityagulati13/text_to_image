@@ -1,35 +1,21 @@
 name: Sync to Hugging Face hub
-
 on:
   push:
     branches: [main]
+
+  # to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
   sync-to-hub:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Clone Hugging Face Space Repo
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          lfs: true
+      - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: |
-          git clone https://${{ secrets.HF_TOKEN }}@huggingface.co/spaces/gulatiadiii/text_to_image repo
-          cd repo
-          git config user.email "actions@github.com"
-          git config user.name "GitHub Actions"
-
-      - name: Copy Updated Files from Main Repo
-        uses: actions/checkout@v3
-        with:
-          path: source
-
-      - name: Sync and Push to Hugging Face
-        run: |
-          rm -rf repo/*  # Clear existing files in HF repo
-          cp -r source/* repo/
-          cd repo
-          git add .
-          git commit -m "Sync from GitHub Actions" || echo "Nothing to commit"
-          git push origin main --force
+        run: git push https://HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/gulatiadiii/text_to_image main
 
